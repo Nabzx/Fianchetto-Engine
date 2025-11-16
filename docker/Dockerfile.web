@@ -1,0 +1,29 @@
+FROM node:20-slim
+
+# Set working directory
+WORKDIR /app
+
+# Copy package files
+COPY web/package.json web/package-lock.json* /app/
+
+# Install dependencies
+RUN npm ci
+
+# Copy web source
+COPY web/ /app/
+
+# Build Next.js app
+RUN npm run build
+
+# Expose port
+EXPOSE 3000
+
+# Set environment variables
+ENV NODE_ENV=production
+ENV ENGINE_URL=http://engine:8080
+ENV NEURAL_URL=http://neural:8000
+ENV EXPLAIN_URL=http://explain:8001
+
+# Run Next.js
+CMD ["npm", "start"]
+

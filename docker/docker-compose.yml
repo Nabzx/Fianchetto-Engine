@@ -1,0 +1,75 @@
+version: '3.8'
+
+services:
+  engine:
+    build:
+      context: ..
+      dockerfile: docker/Dockerfile.engine
+    container_name: fianchetto-engine
+    networks:
+      - fianchetto-network
+    # Note: Engine runs in UCI mode, no HTTP server by default
+    # In production, you would add an HTTP wrapper service
+
+  neural:
+    build:
+      context: ..
+      dockerfile: docker/Dockerfile.neural
+    container_name: fianchetto-neural
+    ports:
+      - "8000:8000"
+    networks:
+      - fianchetto-network
+    environment:
+      - MODEL_PATH=/app/models/best_cnn.pt
+    volumes:
+      - ../neural/models:/app/models
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:8000/health"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+
+  explain:
+    build:
+      context: ..
+      dockerfile: docker/Dockerfile.explain
+    container_name: fianchetto-explain
+    ports:
+      - "8001:8001"
+    networks:
+      - fianchetto-network
+    environment:
+      - STOCKFISH_PATH=/usr/bin/stockfish
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:8001/health"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+
+  web:
+    build:
+      context: ..
+      dockerfile: docker/Dockerfile.web
+    container_name: fianchetto-web
+    ports:
+      - "3000:3000"
+    networks:
+      - fianchetto-network
+    environment:
+      - ENGINE_URL=http://engine:8080
+      - NEURAL_URL=http://neural:8000
+      - EXPLAIN_URL=http://explain:8001
+    depends_on:
+      - neural
+      - explain
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:3000"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+
+networks:
+  fianchetto-network:
+    driver: bridge
+

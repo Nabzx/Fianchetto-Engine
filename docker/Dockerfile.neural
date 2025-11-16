@@ -1,0 +1,28 @@
+FROM python:3.11-slim
+
+# Set working directory
+WORKDIR /app
+
+# Install system dependencies
+RUN apt-get update && apt-get install -y \
+    gcc \
+    g++ \
+    && rm -rf /var/lib/apt/lists/*
+
+# Copy requirements
+COPY neural/requirements.txt /app/
+RUN pip install --no-cache-dir -r requirements.txt
+
+# Copy neural service source
+COPY neural/src/ /app/src/
+COPY neural/models/ /app/models/ 2>/dev/null || mkdir -p /app/models
+
+# Set Python path
+ENV PYTHONPATH=/app
+
+# Expose port
+EXPOSE 8000
+
+# Run API server
+CMD ["python", "-m", "uvicorn", "src.api:app", "--host", "0.0.0.0", "--port", "8000"]
+

@@ -1,0 +1,28 @@
+FROM ubuntu:22.04
+
+# Install dependencies
+RUN apt-get update && apt-get install -y \
+    build-essential \
+    cmake \
+    curl \
+    libcurl4-openssl-dev \
+    && rm -rf /var/lib/apt/lists/*
+
+# Set working directory
+WORKDIR /app
+
+# Copy engine source
+COPY engine/ /app/engine/
+
+# Build engine
+WORKDIR /app/engine
+RUN mkdir -p build && cd build && \
+    cmake .. -DUSE_NEURAL=ON && \
+    make -j$(nproc)
+
+# Expose port (if engine has HTTP interface)
+EXPOSE 8080
+
+# Default command (UCI mode)
+CMD ["./build/fianchetto_uci"]
+
