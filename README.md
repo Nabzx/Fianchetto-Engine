@@ -1,6 +1,6 @@
 Fianchetto Engine
 
-A hybrid classical + neural chess engine with a C++ core, Python neural evaluation service, rule-based explainability engine, and modern Next.js frontend.
+A hybrid classical + neural chess engine with a C++ core, Python neural evaluation service, rule-based explainability engine and modern Next.js frontend.
 
 ## Features
 
