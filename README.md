@@ -1,8 +1,8 @@
-# Fianchetto Engine
+Fianchetto Engine
 
 A hybrid classical + neural chess engine with a C++ core, Python neural evaluation service, rule-based explainability engine, and modern Next.js frontend.
 
-## 🚀 Features
+## Features
 
 - **Classical Chess Engine**: Bitboard-based C++ engine with alpha-beta search
 - **Neural Evaluation**: Optional PyTorch-based neural network evaluation
@@ -10,7 +10,7 @@ A hybrid classical + neural chess engine with a C++ core, Python neural evaluati
 - **Modern Frontend**: Next.js 14 with interactive chessboard and evaluation visualization
 - **Docker Support**: Full containerization with docker-compose
 
-## 📁 Project Structure
+## Project Structure
 
 ```
 fianchetto-engine/
@@ -22,7 +22,7 @@ fianchetto-engine/
 └── docs/             # Documentation
 ```
 
-## 🛠️ Building
+## Building
 
 ### C++ Engine
 
@@ -53,7 +53,7 @@ npm install
 npm run dev
 ```
 
-## 🐳 Docker
+## Docker
 
 Build and run all services:
 
@@ -67,7 +67,7 @@ Services will be available at:
 - Neural API: http://localhost:8000
 - Explain API: http://localhost:8001
 
-## 📚 Documentation
+## Documentation
 
 - [Engine Design](docs/ENGINE_DESIGN.md) - C++ engine architecture
 - [Search Algorithm](docs/SEARCH_ALGO.md) - Search implementation details
@@ -76,7 +76,7 @@ Services will be available at:
 - [API Specification](docs/API_SPEC.md) - HTTP API documentation
 - [Frontend Specification](docs/FRONTEND_SPEC.md) - Web UI documentation
 
-## 🎮 Usage
+## Usage
 
 ### UCI Engine
 
@@ -112,7 +112,7 @@ cd explain/src
 python api.py
 ```
 
-## 🔧 Configuration
+## Configuration
 
 ### Environment Variables
 
@@ -127,11 +127,11 @@ python api.py
 **Explainability Service:**
 - `STOCKFISH_PATH`: Path to Stockfish executable
 
-## 📝 License
+## License
 
 This project is open-source and free to use.
 
-## 🤝 Contributing
+## Contributing
 
 Contributions are welcome! Please feel free to submit a Pull Request.
 
